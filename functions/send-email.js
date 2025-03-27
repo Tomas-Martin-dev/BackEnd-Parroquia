@@ -40,8 +40,11 @@ exports.handler = async (event, context) => {
     await transporter.sendMail({
       from: `<${process.env.EMAIL_USER}>`,
       to: `${process.env.EMAIL_DESTINO}`,
-      subject,
-      html: ` <b>---Informacion de ${name}---</b>
+      subject: `MENSAJE DESDE WEB`,
+      html: ` <p>ASUNTO: ${subject}</p>
+      <br>
+      <b>--- Informacion de Remitente ---</b>
+      <p>Nombre: ${name}</p>
       <p>Correo: ${emailPerson}</p>
       <p>Telefono: ${phone}</p>
       <br>
