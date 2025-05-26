@@ -25,13 +25,14 @@ exports.handler = async (event, context) => {
   }
 
   const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    secure: false,
+    service: "gmail",
     auth: {
+      type: "OAuth2",
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+    },
   });
 
   try {
@@ -63,7 +64,7 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ message: "Error al enviar el correo" })
+      body: JSON.stringify({ message: "Error al enviar el correo", error: error.message })
     };
   }
 };
